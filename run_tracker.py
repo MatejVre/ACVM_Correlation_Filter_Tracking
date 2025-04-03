@@ -3,15 +3,17 @@ import os
 import cv2
 
 from sequence_utils import VOTSequence
-from ncc_tracker_example import NCCTracker, NCCParams
-from ms_tracker import MeanShiftTracker, MSParams
+# from ncc_tracker_example import NCCTracker, NCCParams
+# from ms_tracker import MeanShiftTracker, MSParams
+from cf_tracker import cf_tracker
 #, MSParams
 all_failures = 0
 all_fps = []
 names = [n for n in os.listdir("vids/")]
-#names = ["bolt"]
+names = ["basketball"]
 for name in names:
     # set the path to directory where you have the sequences
+    
     dataset_path = 'vids' # TODO: set to the dataet path on your disk
     sequence = name  # choose the sequence you want to test
 
@@ -34,8 +36,8 @@ for name in names:
     # alphas = [0, 0.01, 0.05, 0.1]
 
     n_bins = [8, 16, 20]
-    parameters = MSParams(1, 0.1, 40, 0, 20)
-    tracker = MeanShiftTracker(parameters)
+    #parameters = MSParams(1, 0.1, 40, 0, 20)
+    tracker = cf_tracker()
     #parameters = MSParams()
     #tracker = MeanShiftTracker(parameters)
 
