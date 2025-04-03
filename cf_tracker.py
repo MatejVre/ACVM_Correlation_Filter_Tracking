@@ -10,7 +10,7 @@ class cf_tracker():
         self.target_height = None
         self.region_width = None
         self.region_height = None
-        self.scaling_parameter = 1.4
+        self.scaling_parameter = 1
         self.x = None
         self.y = None
         self.gauss_peak = None
@@ -25,7 +25,6 @@ class cf_tracker():
             x_ = np.array(region[::2])
             y_ = np.array(region[1::2])
             region = [np.min(x_), np.min(y_), np.max(x_) - np.min(x_) + 1, np.max(y_) - np.min(y_) + 1]
-
             
         position = (region[0] + region[2] / 2, region[1] + region[3] / 2) # X x Y
         self.x = position[0]
@@ -48,7 +47,7 @@ class cf_tracker():
         P_hat_conjugate = np.conjugate(P_hat)
         self.G_hat = np.fft.fft2(self.gauss_peak)
 
-        self.H_hat_conjugate = (self.G_hat * P_hat_conjugate) / ((P_hat * P_hat_conjugate)+1)
+        self.H_hat_conjugate = (self.G_hat * P_hat_conjugate) / ((P_hat * P_hat_conjugate)+1e-2)
 
     def track(self, image):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -73,7 +72,7 @@ class cf_tracker():
         self.x += x
         self.y += y
 
-        new_H_hat_conjugate = (self.G_hat * P_hat_conjugate) / ((P_hat * P_hat_conjugate)+1)
+        new_H_hat_conjugate = (self.G_hat * P_hat_conjugate) / ((P_hat * P_hat_conjugate)+1e-2)
 
         self.H_hat_conjugate = ((1-self.alpha) * self.H_hat_conjugate) + (self.alpha * new_H_hat_conjugate)
 

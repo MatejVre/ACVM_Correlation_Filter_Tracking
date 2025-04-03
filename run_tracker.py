@@ -65,10 +65,10 @@ for name in names:
         # calculate overlap (needed to determine failure of a tracker)
         gt_bb = sequence.get_annotation(frame_idx, type='rectangle')
         o = sequence.overlap(predicted_bbox, gt_bb)
-
         # draw ground-truth and predicted bounding boxes, frame numbers and show image
         if show_gt:
             sequence.draw_region(img, gt_bb, (0, 255, 0), 1)
+
         sequence.draw_region(img, predicted_bbox, (0, 0, 255), 2)
         sequence.draw_text(img, '%d/%d' % (frame_idx + 1, sequence.length()), (25, 25))
         sequence.draw_text(img, 'Fails: %d' % n_failures, (25, 55))
