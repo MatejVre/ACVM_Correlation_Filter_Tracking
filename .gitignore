@@ -1,3 +1,5 @@
 *.pdf
 vids/
 __pycache__
+toolkit-dir/
+workspace/

@@ -10,7 +10,7 @@ from cf_tracker import cf_tracker
 all_failures = 0
 all_fps = []
 names = [n for n in os.listdir("vids/")]
-names = ["basketball"]
+# names = ["basketball"]
 for name in names:
     # set the path to directory where you have the sequences
     
@@ -29,22 +29,18 @@ for name in names:
     sequence = VOTSequence(dataset_path, sequence)
     init_frame = 0
     n_failures = 0
-    # create parameters and tracker objects
-    # sigmas = [0.3, 0.5, 0.7, 1.2]
-    # distances = [0.05, 0.1, 0.5, 0.1]
-    # weights = [1e-3, 1e-5, 1e-7]
-    # alphas = [0, 0.01, 0.05, 0.1]
 
-    n_bins = [8, 16, 20]
     #parameters = MSParams(1, 0.1, 40, 0, 20)
-    tracker = cf_tracker()
+    tracker = cf_tracker(sigma=1.5, alpha=0.15, scaling_parameter=1)
+
+
     #parameters = MSParams()
     #tracker = MeanShiftTracker(parameters)
 
     time_all = 0
 
     # initialize visualization window
-    sequence.initialize_window(win_name)
+    # sequence.initialize_window(win_name)
     # tracking loop - goes over all frames in the video sequence
     frame_idx = 0
     while frame_idx < sequence.length():
@@ -66,13 +62,13 @@ for name in names:
         gt_bb = sequence.get_annotation(frame_idx, type='rectangle')
         o = sequence.overlap(predicted_bbox, gt_bb)
         # draw ground-truth and predicted bounding boxes, frame numbers and show image
-        if show_gt:
-            sequence.draw_region(img, gt_bb, (0, 255, 0), 1)
+        # if show_gt:
+        #     sequence.draw_region(img, gt_bb, (0, 255, 0), 1)
 
-        sequence.draw_region(img, predicted_bbox, (0, 0, 255), 2)
-        sequence.draw_text(img, '%d/%d' % (frame_idx + 1, sequence.length()), (25, 25))
-        sequence.draw_text(img, 'Fails: %d' % n_failures, (25, 55))
-        sequence.show_image(img, video_delay)
+        # sequence.draw_region(img, predicted_bbox, (0, 0, 255), 2)
+        # sequence.draw_text(img, '%d/%d' % (frame_idx + 1, sequence.length()), (25, 25))
+        # sequence.draw_text(img, 'Fails: %d' % n_failures, (25, 55))
+        # sequence.show_image(img, video_delay)
 
         if o > 0 or not reinitialize:
             # increase frame counter by 1
