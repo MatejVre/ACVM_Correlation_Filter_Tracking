@@ -5,7 +5,7 @@ from ex3_utils import *
 
 class cf_tracker(Tracker):
 
-    def __init__(self, sigma=1.5, scaling_parameter=1, alpha=0.15):
+    def __init__(self, sigma=1.75, scaling_parameter=1.15, alpha=0.05):
         self.sigma = sigma
         self.alpha = alpha
         self.scaling_parameter = scaling_parameter
